@@ -3,13 +3,12 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 2
-  tags:
-  - TutorialRequirement
+  tags: []
   layers:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - Post
+  - 
   - Water
   - UI
   - 
