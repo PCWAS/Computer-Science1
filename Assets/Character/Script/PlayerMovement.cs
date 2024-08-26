@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
 {
+    [SerializeFeild]    private float speed;
    private RigidBody2D body;
 
    private void Awake()
@@ -13,6 +14,6 @@ public class PlayerMovement : MonoBehaviour
 
     private void Update()
     {
-        body.velocity   =   new vector3(Input.GetAxis("Horizontal"),0,0);
+        body.velocity   =   new vector2(Input.GetAxis("Horizontal") * speed, body.velocity.y);
     }
 }
