@@ -4,16 +4,26 @@ using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
 {
-    [SerializeFeild]    private float speed;
-   private RigidBody2D body;
+    private float horizontal;
+    private float speed = 8f;
+    private float jumpingPower = 16f;
+    private float isFacingRight = True;
 
-   private void Awake()
-   {
-        body = GetComponent<RigidBody2D>();
-   }
+    [SerializeField] private RigidBody2D rb;
+    [SerializeField] private Transform groundCheck;
+    [SerializeField] private LayerMask groundLayer;
 
-    private void Update()
+
+    // Update is called once per frame
+
+    void Update()
     {
-        body.velocity   =   new vector2(Input.GetAxis("Horizontal") * speed, body.velocity.y);
+        horizontal = Input.GetAxisRaw("Horizontal"); 
+    }
+
+
+    private void FixedUpdate()
+    {
+        rb.velocity = new Vecotor2(horizontal)
     }
 }
