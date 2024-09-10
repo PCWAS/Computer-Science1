@@ -7,14 +7,11 @@ public class PlayerMovement : MonoBehaviour
     private float horizontal;
     private float speed = 8f;
     private float jumpingPower = 16f;
-    private bool isFacingRight = True;
+    private bool isFacingRight = true;
 
-    [SerializeField] private RigidBody2D rb;
+    [SerializeField] private Rigidbody2D rb; 
     [SerializeField] private Transform groundCheck;
     [SerializeField] private LayerMask groundLayer;
-
-
-    // Update is called once per frame
 
     void Update()
     {
@@ -22,7 +19,7 @@ public class PlayerMovement : MonoBehaviour
 
         if (Input.GetButtonDown("Jump") && IsGrounded())
         {
-            rb.velocity = new Vector2(rb.velocity. x, jumpingPower);
+            rb.velocity = new Vector2(rb.velocity.x, jumpingPower);
         }
 
         if (Input.GetButtonUp("Jump") && rb.velocity.y > 0f)
@@ -32,10 +29,9 @@ public class PlayerMovement : MonoBehaviour
         Flip();
     }
 
-
     private void FixedUpdate()
     {
-        rb.velocity = new Vecotor2(horizontal * speed, rb.velocity.y);
+        rb.velocity = new Vector2(horizontal * speed, rb.velocity.y); 
     }
 
     private bool IsGrounded()
@@ -45,13 +41,12 @@ public class PlayerMovement : MonoBehaviour
 
     private void Flip()
     {
-        if (isFacingRight && horizontal < 0f || !isFacingRight > 0f)
+        if (isFacingRight && horizontal < 0f || !isFacingRight && horizontal > 0f)
         {
             isFacingRight = !isFacingRight;
             Vector3 localScale = transform.localScale;
-            localsScale.x *= -1f;
-            transform.localScale = localScale:
+            localScale.x *= -1f; 
+            transform.localScale = localScale; 
         }
     }
-
 }
