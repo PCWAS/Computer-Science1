@@ -13,34 +13,39 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private Transform groundCheck;
     [SerializeField] private LayerMask groundLayer;
 
+    private bool isGrounded;
+
     void Update()
     {
+        // Input handling
         horizontal = Input.GetAxisRaw("Horizontal"); 
-
-        if (Input.GetButtonDown("Jump") && IsGrounded())
+        if (Input.GetButtonDown("Jump") && isGrounded)
         {
             rb.velocity = new Vector2(rb.velocity.x, jumpingPower);
         }
 
-        if (Input.GetButtonUp("Jump") && rb.velocity.y > 0f)
-        {
-            rb.velocity = new Vector2(rb.velocity.x, rb.velocity.y * 0.5f);
-        }
+        // Flip the player sprite if necessary
         Flip();
     }
 
     private void FixedUpdate()
     {
+        // Movement handling
         rb.velocity = new Vector2(horizontal * speed, rb.velocity.y); 
+
+        // Check if the player is grounded
+        isGrounded = IsGrounded();
     }
 
     private bool IsGrounded()
     {
+        // Adjust the radius if necessary
         return Physics2D.OverlapCircle(groundCheck.position, 0.2f, groundLayer);
     }
 
     private void Flip()
     {
+        // Flip the sprite when changing direction
         if (isFacingRight && horizontal < 0f || !isFacingRight && horizontal > 0f)
         {
             isFacingRight = !isFacingRight;
