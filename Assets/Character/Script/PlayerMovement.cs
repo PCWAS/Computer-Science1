@@ -1,57 +1,39 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
+
 
 public class PlayerMovement : MonoBehaviour
 {
-    private float horizontal;
-    private float speed = 8f;
-    private float jumpingPower = 16f;
-    private bool isFacingRight = true;
-
-    [SerializeField] private Rigidbody2D rb; 
-    [SerializeField] private Transform groundCheck;
-    [SerializeField] private LayerMask groundLayer;
-
-    private bool isGrounded;
+    public float speed = 5f;
 
     void Update()
     {
-        // Input handling
-        horizontal = Input.GetAxisRaw("Horizontal"); 
-        if (Input.GetButtonDown("Jump") && isGrounded)
+        float moveVertical = 0f;
+        float moveHorizontal = 0f;
+
+        // Check for vertical movement
+        if (Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.UpArrow))
         {
-            rb.velocity = new Vector2(rb.velocity.x, jumpingPower);
+            moveVertical = 1f;
+        }
+        else if (Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.DownArrow))
+        {
+            moveVertical = -1f;
         }
 
-        // Flip the player sprite if necessary
-        Flip();
-    }
-
-    private void FixedUpdate()
-    {
-        // Movement handling
-        rb.velocity = new Vector2(horizontal * speed, rb.velocity.y); 
-
-        // Check if the player is grounded
-        isGrounded = IsGrounded();
-    }
-
-    private bool IsGrounded()
-    {
-        // Adjust the radius if necessary
-        return Physics2D.OverlapCircle(groundCheck.position, 0.2f, groundLayer);
-    }
-
-    private void Flip()
-    {
-        // Flip the sprite when changing direction
-        if (isFacingRight && horizontal < 0f || !isFacingRight && horizontal > 0f)
+        // Check for horizontal movement
+        if (Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.LeftArrow))
         {
-            isFacingRight = !isFacingRight;
-            Vector3 localScale = transform.localScale;
-            localScale.x *= -1f; 
-            transform.localScale = localScale; 
+            moveHorizontal = -1f;
         }
+        else if (Input.GetKey(KeyCode.D) || Input.GetKey(KeyCode.RightArrow))
+        {
+            moveHorizontal = 1f;
+        }
+
+        Vector3 movement = new Vector3(moveHorizontal, moveVertical, 0);
+        transform.Translate(movement * speed * Time.deltaTime);
     }
+
 }
+
+
